@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PreciousGift — Škola stranih jezika, Niš</title>
+  <meta name="description" content="PreciousGift — škola engleskog i nemačkog jezika u Nišu. Male grupe (4–6 polaznika), fokus na konverzaciju i besplatno testiranje znanja." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#E92427', dark: '#C21A1D', light: '#FF4D50' },
+            cream: { DEFAULT: '#F8EBDB', deep: '#F1DEC8', soft: '#FCF5EC' },
+            ink: '#2A1D18',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['"DM Serif Display"', 'Georgia', 'serif'],
+          },
+          keyframes: {
+            'fade-up': {
+              '0%': { opacity: '0', transform: 'translateY(28px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            'float-slow': {
+              '0%,100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-18px)' },
+            },
+          },
+          animation: {
+            'fade-up': 'fade-up .7s cubic-bezier(.2,.7,.3,1) both',
+            'float-slow': 'float-slow 7s ease-in-out infinite',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+    /* Glassmorphism helper */
+    .glass {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+    .glass-strong {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    /* Striped placeholder for gallery imagery */
+    .ph {
+      background-color: #F1DEC8;
+      background-image: repeating-linear-gradient(135deg, rgba(233,36,39,.10) 0 10px, transparent 10px 24px);
+    }
+
+    /* Ken Burns zoom on hero background */
+    @keyframes kenBurns {
+      0%   { transform: scale(1)    translate(0, 0); }
+      100% { transform: scale(1.18) translate(-1.5%, -1.5%); }
+    }
+    .ken-burns { animation: kenBurns 20s ease-in-out infinite alternate; will-change: transform; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* FAQ accordion */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+
+    a, button { -webkit-tap-highlight-color: transparent; }
+    ::selection { background: #E92427; color: #fff; }
+  </style>
+</head>
+
+<body class="font-sans bg-cream text-ink antialiased">
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header id="top" class="fixed top-0 inset-x-0 z-50">
+    <div class="glass-strong border-b border-white/60 shadow-[0_8px_30px_rgba(42,29,24,.06)]">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between gap-4">
+        <!-- Logo -->
+        <a href="#top" class="flex items-center gap-2.5 shrink-0" aria-label="PreciousGift početna">
+          <img src="uploads/logo.jpg" alt="PreciousGift logo" class="w-10 h-10 rounded-xl object-cover shadow-lg shadow-brand/20" />
+          <span class="font-display text-xl sm:text-2xl leading-none tracking-tight">Precious<span class="text-brand">Gift</span></span>
+        </a>
+
+        <!-- Desktop links -->
+        <ul class="hidden md:flex items-center gap-1 text-[14px] lg:text-[15px] font-medium">
+          <li><a class="nav-link px-3 py-2 rounded-lg hover:bg-brand/10 hover:text-brand transition" href="#o-nama">O nama</a></li>
+          <li><a class="nav-link px-3 py-2 rounded-lg hover:bg-brand/10 hover:text-brand transition" href="#kursevi">Kursevi</a></li>
+          <li><a class="nav-link px-3 py-2 rounded-lg hover:bg-brand/10 hover:text-brand transition" href="#galerija">Galerija</a></li>
+          <li><a class="nav-link px-3 py-2 rounded-lg hover:bg-brand/10 hover:text-brand transition" href="#faq">Česta pitanja</a></li>
+          <li><a class="nav-link px-3 py-2 rounded-lg hover:bg-brand/10 hover:text-brand transition" href="#kontakt">Kontakt</a></li>
+        </ul>
+
+        <div class="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
+          <a href="#kontakt" class="inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand text-white font-semibold text-sm shadow-lg shadow-brand/30 hover:bg-brand-dark transition">Besplatno testiranje</a>
+        </div>
+
+        <!-- Hamburger -->
+        <button id="burger" aria-label="Otvori meni" aria-expanded="false" aria-controls="mobile-menu"
+                class="md:hidden grid place-items-center w-11 h-11 -mr-1 rounded-xl text-ink hover:bg-brand/10 transition">
+          <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================== MOBILE MENU (full overlay) ===================== -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] md:hidden translate-x-full transition-transform duration-300 ease-out" aria-hidden="true">
+    <div class="absolute inset-0 bg-cream-soft/95 backdrop-blur-xl"></div>
+    <div class="relative h-full flex flex-col px-6 pt-5 pb-10 overflow-y-auto">
+      <div class="flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><img src="uploads/logo.jpg" alt="PreciousGift logo" class="w-9 h-9 rounded-lg object-cover" /><span class="font-display text-2xl">Precious<span class="text-brand">Gift</span></span></span>
+        <button id="burger-close" aria-label="Zatvori meni" class="grid place-items-center w-12 h-12 rounded-full bg-brand text-white shadow-lg shadow-brand/30">
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <nav class="mt-10 flex flex-col gap-1">
+        <a class="m-link font-display text-3xl py-3 border-b border-ink/10" href="#o-nama">O nama</a>
+        <a class="m-link font-display text-3xl py-3 border-b border-ink/10" href="#kursevi">Kursevi</a>
+        <a class="m-link font-display text-3xl py-3 border-b border-ink/10" href="#galerija">Galerija</a>
+        <a class="m-link font-display text-3xl py-3 border-b border-ink/10" href="#recenzije">Recenzije</a>
+        <a class="m-link font-display text-3xl py-3 border-b border-ink/10" href="#faq">FAQ</a>
+        <a class="m-link font-display text-3xl py-3 border-b border-ink/10" href="#kontakt">Kontakt</a>
+      </nav>
+
+      <a href="#kontakt" class="m-link mt-8 inline-flex items-center justify-center min-h-[52px] px-6 rounded-full bg-brand text-white font-semibold text-lg shadow-xl shadow-brand/30">Zakaži besplatno testiranje</a>
+
+      <div class="mt-auto pt-10 flex items-center gap-4">
+        <a href="https://www.facebook.com/precious.gift.3154" target="_blank" rel="noopener" aria-label="Facebook" class="grid place-items-center w-12 h-12 rounded-full glass text-ink">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-3 1.3-3 3v2H8v3h3v7h3v-7h2.5l.5-3H14V9.2c0-.6.2-1.2 1-1.2z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/preciousgiftskolastranihjezika" target="_blank" rel="noopener" aria-label="Instagram" class="grid place-items-center w-12 h-12 rounded-full glass text-ink">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <span class="text-sm text-ink/50 ml-auto">Niš, Srbija</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero" class="relative min-h-[90vh] flex items-center overflow-hidden">
+    <!-- Layer 1: background image (Ken Burns) -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img src="uploads/hero.jpg" alt="Nasmejani polaznici u savremenoj učionici PreciousGift" class="ken-burns w-full h-full object-cover" />
+    </div>
+
+    <!-- Layer 2: dark overlay for contrast -->
+    <div class="absolute inset-0 z-10 bg-black/50"></div>
+    <!-- subtle brand glow -->
+    <div class="pointer-events-none absolute -top-24 -right-24 z-10 w-[32rem] h-[32rem] rounded-full bg-brand/20 blur-3xl animate-float-slow"></div>
+
+    <!-- Layer 3: content -->
+    <div class="relative z-20 w-full max-w-5xl mx-auto px-5 sm:px-8 py-28 text-center">
+      <span class="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-sm font-semibold text-white animate-fade-up">
+        <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+        Škola stranih jezika · Niš
+      </span>
+
+      <h1 class="mt-6 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] tracking-tight text-white text-balance animate-fade-up"
+          style="animation-delay:.1s; text-shadow:0 4px 30px rgba(0,0,0,.45);">
+        Otvorite vrata novom svetu jezika
+        <span class="block text-brand-light">PreciousGift Niš</span>
+      </h1>
+
+      <p class="mt-6 mx-auto max-w-2xl text-lg md:text-xl text-white/90 leading-relaxed animate-fade-up"
+         style="animation-delay:.2s; text-shadow:0 2px 16px rgba(0,0,0,.5);">
+        Učenje u malim grupama od <strong class="text-white">4–6 polaznika</strong>, sa fokusom na živu konverzaciju. Svaki polaznik dobija pažnju koju zaslužuje.
+      </p>
+
+      <div class="mt-9 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay:.3s">
+        <a href="#kontakt"
+           class="glass inline-flex items-center justify-center min-h-[54px] px-8 rounded-full text-white font-semibold text-base shadow-xl hover:bg-brand/90 hover:-translate-y-0.5 transition"
+           style="border:2px solid #E92427;">
+          Zakaži besplatno testiranje
+        </a>
+        <a href="tel:+381652534486"
+           class="glass inline-flex items-center justify-center gap-2 min-h-[54px] px-8 rounded-full text-white font-semibold text-base shadow-xl hover:bg-white/20 hover:-translate-y-0.5 transition"
+           style="border:2px solid #E92427;">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5c0 8 7 15 15 15l-1-4-4-1-2 2a13 13 0 01-5-5l2-2-1-4z"/></svg>
+          Pozovi nas
+        </a>
+      </div>
+
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm animate-fade-up" style="animation-delay:.4s">
+        <div><span class="font-display text-3xl text-brand-light">4–6</span><p class="text-white/70 -mt-1">polaznika u grupi</p></div>
+        <div class="hidden sm:block w-px h-10 bg-white/25"></div>
+        <div><span class="font-display text-3xl text-brand-light">2</span><p class="text-white/70 -mt-1">jezika: EN &amp; DE</p></div>
+        <div class="hidden sm:block w-px h-10 bg-white/25"></div>
+        <div><span class="font-display text-3xl text-brand-light">100%</span><p class="text-white/70 -mt-1">fokus na konverzaciju</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== O NAMA ===================== -->
+  <section id="o-nama" class="relative py-20 sm:py-28 bg-cream overflow-hidden">
+    <!-- dekorativni blur krugovi -->
+    <div class="pointer-events-none absolute -top-20 -left-24 w-[26rem] h-[26rem] rounded-full bg-brand/15 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-24 -right-16 w-[30rem] h-[30rem] rounded-full bg-cream-deep/80 blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <span class="text-brand font-semibold tracking-wide uppercase text-sm">Vaš put do samouverenog govora</span>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">Zašto izabrati PreciousGift?</h2>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-3 gap-6">
+        <!-- Kartica 1 -->
+        <div class="glass rounded-3xl p-7 reveal text-center transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-2xl hover:shadow-brand/20">
+          <div class="grid place-items-center w-14 h-14 rounded-2xl bg-brand/10 text-brand mb-5 mx-auto">
+            <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M4 19c0-2.8 2.2-5 5-5s5 2.2 5 5M15 19c0-1.7.6-3.2 1.7-4.2"/></svg>
+          </div>
+          <h3 class="font-display text-2xl">Male grupe (4–6 polaznika)</h3>
+          <p class="mt-3 text-ink/65 leading-relaxed">Fokus na individualni pristup i maksimalnu pažnju svakom polazniku.</p>
+        </div>
+
+        <!-- Kartica 2 -->
+        <div class="glass rounded-3xl p-7 reveal text-center transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-2xl hover:shadow-brand/20" style="transition-delay:.07s">
+          <div class="grid place-items-center w-14 h-14 rounded-2xl bg-brand/10 text-brand mb-5 mx-auto">
+            <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 10h8M8 14h5"/><path d="M4 5h16v12H9l-5 4V5z"/></svg>
+          </div>
+          <h3 class="font-display text-2xl">Fokus na konverzaciju</h3>
+          <p class="mt-3 text-ink/65 leading-relaxed">Progovorite od prvog časa, uz moderne metode i prirodnu komunikaciju.</p>
+        </div>
+
+        <!-- Kartica 3 -->
+        <div class="glass rounded-3xl p-7 reveal text-center transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-2xl hover:shadow-brand/20" style="transition-delay:.14s">
+          <div class="grid place-items-center w-14 h-14 rounded-2xl bg-brand/10 text-brand mb-5 mx-auto">
+            <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <h3 class="font-display text-2xl">Obavezna procena znanja</h3>
+          <p class="mt-3 text-ink/65 leading-relaxed">Besplatna procena trenutnog nivoa pre upisa radi preciznog formiranja grupa.</p>
+        </div>
+      </div>
+
+      <div class="mt-12 max-w-3xl mx-auto text-center reveal">
+        <p class="text-lg sm:text-xl text-ink/75 leading-relaxed text-pretty">
+          PreciousGift je škola engleskog i nemačkog jezika u srcu Niša, nastala iz uverenja da se jezik najbrže uči kada se zaista govori. Spajamo tradiciju kvalitetnog učenja sa savremenim pristupom i prilagođavamo nastavu deci, tinejdžerima i odraslima. Svaki čas je prilika za razgovor, a ne samo za teoriju — a mala grupa znači da nijedan polaznik ne ostaje u drugom planu.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== KURSEVI ===================== -->
+  <section id="kursevi" class="relative py-16 sm:py-24 bg-cream-deep/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <span class="text-brand font-semibold tracking-wide uppercase text-sm">Kursevi</span>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">Engleski i nemački, za svaki uzrast</h2>
+        <p class="mt-5 text-base sm:text-lg text-ink/70 leading-relaxed">Programi prilagođeni deci, tinejdžerima i odraslima — od redovnih do intenzivnih i konverzacijskih kurseva, uključujući pripremu za sertifikate.</p>
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- card -->
+        <div class="glass-strong rounded-3xl p-7 reveal flex flex-col text-center items-center hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-ink/10 transition">
+          <div class="flex items-center justify-center gap-3">
+            <span class="inline-flex items-center gap-2 text-brand font-semibold"><span class="text-2xl">🇬🇧</span> Engleski</span>
+            <span class="text-xs font-semibold glass rounded-full px-3 py-1">Deca</span>
+          </div>
+          <h3 class="mt-4 font-display text-2xl">Engleski za decu</h3>
+          <p class="mt-2 text-sm text-ink/65 leading-relaxed flex-1">Kroz igru, priče i pesme. Mališani zavole jezik pre nego što shvate da uče.</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/75">
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Uzrast 6–11 godina</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> 2 časa nedeljno</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Grupe 4–6 polaznika</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand/10 text-brand font-semibold text-sm hover:bg-brand hover:text-white transition">Prijavi se</a>
+        </div>
+
+        <div class="glass-strong rounded-3xl p-7 reveal flex flex-col text-center items-center hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-ink/10 transition" style="transition-delay:.05s">
+          <div class="flex items-center justify-center gap-3">
+            <span class="inline-flex items-center gap-2 text-brand font-semibold"><span class="text-2xl">🇬🇧</span> Engleski</span>
+            <span class="text-xs font-semibold glass rounded-full px-3 py-1">Tinejdžeri</span>
+          </div>
+          <h3 class="mt-4 font-display text-2xl">Redovni kurs</h3>
+          <p class="mt-2 text-sm text-ink/65 leading-relaxed flex-1">Sistematičan program po CEFR nivoima (A1–C1) usklađen sa školskim gradivom.</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/75">
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Nivoi A1 do C1</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Priprema za školu i maturu</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Redovno praćenje napretka</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand/10 text-brand font-semibold text-sm hover:bg-brand hover:text-white transition">Prijavi se</a>
+        </div>
+
+        <div class="relative glass-strong rounded-3xl p-7 reveal flex flex-col text-center items-center ring-2 ring-brand hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-brand/20 transition">
+          <span class="absolute -top-3 left-7 bg-brand text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">Najpopularniji</span>
+          <div class="flex items-center justify-center gap-3">
+            <span class="inline-flex items-center gap-2 text-brand font-semibold"><span class="text-2xl">🇬🇧</span> Engleski</span>
+            <span class="text-xs font-semibold glass rounded-full px-3 py-1">Odrasli</span>
+          </div>
+          <h3 class="mt-4 font-display text-2xl">Konverzacijski kurs</h3>
+          <p class="mt-2 text-sm text-ink/65 leading-relaxed flex-1">Za one koji znaju osnove, a žele da progovore tečno i bez straha.</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/75">
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> 100% govorne vežbe</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Realne životne teme</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Poslovni engleski na zahtev</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand text-white font-semibold text-sm hover:bg-brand-dark transition">Prijavi se</a>
+        </div>
+
+        <div class="glass-strong rounded-3xl p-7 reveal flex flex-col text-center items-center hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-ink/10 transition">
+          <div class="flex items-center justify-center gap-3">
+            <span class="inline-flex items-center gap-2 text-brand font-semibold"><span class="text-2xl">🇩🇪</span> Nemački</span>
+            <span class="text-xs font-semibold glass rounded-full px-3 py-1">Svi uzrasti</span>
+          </div>
+          <h3 class="mt-4 font-display text-2xl">Nemački od nule</h3>
+          <p class="mt-2 text-sm text-ink/65 leading-relaxed flex-1">Temeljan početni kurs za decu, tinejdžere i odrasle — korak po korak.</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/75">
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Nivoi A1 do B2</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Čvrsti temelji izgovora</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Grupe 4–6 polaznika</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand/10 text-brand font-semibold text-sm hover:bg-brand hover:text-white transition">Prijavi se</a>
+        </div>
+
+        <div class="glass-strong rounded-3xl p-7 reveal flex flex-col text-center items-center hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-ink/10 transition" style="transition-delay:.05s">
+          <div class="flex items-center justify-center gap-3">
+            <span class="inline-flex items-center gap-2 text-brand font-semibold"><span class="text-2xl">🇩🇪</span> Nemački</span>
+            <span class="text-xs font-semibold glass rounded-full px-3 py-1">Odrasli</span>
+          </div>
+          <h3 class="mt-4 font-display text-2xl">Intenzivni kurs</h3>
+          <p class="mt-2 text-sm text-ink/65 leading-relaxed flex-1">Ubrzan tempo za posao, studije ili život u inostranstvu.</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/75">
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> 3–4 časa nedeljno</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Brz napredak kroz nivoe</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Praktičan vokabular</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand/10 text-brand font-semibold text-sm hover:bg-brand hover:text-white transition">Prijavi se</a>
+        </div>
+
+        <div class="glass-strong rounded-3xl p-7 reveal flex flex-col text-center items-center hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-ink/10 transition" style="transition-delay:.1s">
+          <div class="flex items-center justify-center gap-3">
+            <span class="inline-flex items-center gap-2 text-brand font-semibold"><span class="text-2xl">📜</span> EN / DE</span>
+            <span class="text-xs font-semibold glass rounded-full px-3 py-1">Sertifikati</span>
+          </div>
+          <h3 class="mt-4 font-display text-2xl">Priprema za sertifikate</h3>
+          <p class="mt-2 text-sm text-ink/65 leading-relaxed flex-1">Ciljana priprema za međunarodne ispite i polaganje uz probne testove.</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/75">
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Cambridge, Goethe i dr.</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Simulacije ispita</li>
+            <li class="flex gap-2 justify-center"><span class="text-brand">•</span> Fokus na slabe tačke</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex items-center justify-center min-h-[44px] px-5 rounded-full bg-brand/10 text-brand font-semibold text-sm hover:bg-brand hover:text-white transition">Prijavi se</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== GALERIJA ===================== -->
+  <section id="galerija" class="relative py-20 sm:py-28 overflow-hidden bg-brand bg-cover bg-center" style="background-image:url('uploads/galerija-bg.jpg');">
+    <!-- tamno-crveni overlay za kontrast i usklađenost -->
+    <div class="pointer-events-none absolute inset-0" style="background:linear-gradient(to bottom, rgba(140,16,19,.78), rgba(90,10,12,.82));"></div>
+    <div class="pointer-events-none absolute -top-16 -right-16 w-[24rem] h-[24rem] rounded-full bg-white/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-20 -left-16 w-[26rem] h-[26rem] rounded-full bg-black/10 blur-3xl"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <span class="text-cream/90 font-semibold tracking-wide uppercase text-sm">Trenuci učenja, smeha i uspeha</span>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl leading-tight text-white">Zavirite u PreciousGift učionice</h2>
+      </div>
+
+      <div class="mt-12 columns-2 lg:columns-3 gap-3 sm:gap-5 [column-fill:balance]">
+        <!-- 1 -->
+        <figure class="group relative mb-3 sm:mb-5 break-inside-avoid rounded-2xl overflow-hidden reveal p-1.5 bg-white/15 backdrop-blur-md border border-white/25 shadow-lg hover:shadow-2xl hover:shadow-black/30 transition">
+          <div class="relative rounded-xl overflow-hidden">
+            <img src="uploads/1.webp" alt="Čas u PreciousGift učionici" loading="lazy" class="w-full h-auto block transition duration-300 group-hover:scale-[1.03]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <figcaption class="absolute left-3 bottom-3 glass-strong rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-ink">Mesto gde pitanja imaju odgovor</figcaption>
+          </div>
+        </figure>
+
+        <!-- 2 -->
+        <figure class="group relative mb-3 sm:mb-5 break-inside-avoid rounded-2xl overflow-hidden reveal p-1.5 bg-white/15 backdrop-blur-md border border-white/25 shadow-lg hover:shadow-2xl hover:shadow-black/30 transition">
+          <div class="relative rounded-xl overflow-hidden">
+            <img src="uploads/3.jpg" alt="Dodela diplome polazniku" loading="lazy" class="w-full h-auto block transition duration-300 group-hover:scale-[1.03]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <figcaption class="absolute left-3 bottom-3 glass-strong rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-ink">Dodela diploma</figcaption>
+          </div>
+        </figure>
+
+        <!-- 3 -->
+        <figure class="group relative mb-3 sm:mb-5 break-inside-avoid rounded-2xl overflow-hidden reveal p-1.5 bg-white/15 backdrop-blur-md border border-white/25 shadow-lg hover:shadow-2xl hover:shadow-black/30 transition">
+          <div class="relative rounded-xl overflow-hidden">
+            <img src="uploads/4.jpg" alt="Polaznice sa diplomama" loading="lazy" class="w-full h-auto block transition duration-300 group-hover:scale-[1.03]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <figcaption class="absolute left-3 bottom-3 glass-strong rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-ink">Naši uspešni polaznici</figcaption>
+          </div>
+        </figure>
+
+        <!-- 4 -->
+        <figure class="group relative mb-3 sm:mb-5 break-inside-avoid rounded-2xl overflow-hidden reveal p-1.5 bg-white/15 backdrop-blur-md border border-white/25 shadow-lg hover:shadow-2xl hover:shadow-black/30 transition">
+          <div class="relative rounded-xl overflow-hidden">
+            <img src="uploads/5.jpg" alt="Polaznica sa diplomom" loading="lazy" class="w-full h-auto block transition duration-300 group-hover:scale-[1.03]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <figcaption class="absolute left-3 bottom-3 glass-strong rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-ink">Ponos nakon položenog ispita</figcaption>
+          </div>
+        </figure>
+
+        <!-- 5 -->
+        <figure class="group relative mb-3 sm:mb-5 break-inside-avoid rounded-2xl overflow-hidden reveal p-1.5 bg-white/15 backdrop-blur-md border border-white/25 shadow-lg hover:shadow-2xl hover:shadow-black/30 transition">
+          <div class="relative rounded-xl overflow-hidden">
+            <img src="uploads/6.jfif" alt="Polaznice vežbaju na času" loading="lazy" class="w-full h-auto block transition duration-300 group-hover:scale-[1.03]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <figcaption class="absolute left-3 bottom-3 glass-strong rounded-lg px-3 py-1.5 text-xs sm:text-sm font-semibold text-ink">Danas vežbaš. Sutra govoriš.</figcaption>
+          </div>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RECENZIJE ===================== -->
+  <section id="recenzije" class="relative py-20 sm:py-28 bg-cream-deep/40 overflow-hidden">
+    <div class="pointer-events-none absolute -top-16 -left-20 w-[24rem] h-[24rem] rounded-full bg-brand/10 blur-3xl"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <span class="text-brand font-semibold tracking-wide uppercase text-sm">Utisci iz prve ruke</span>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">Šta kažu naši polaznici</h2>
+      </div>
+
+      <!-- Google ocena badge -->
+      <div class="mt-8 flex justify-center reveal">
+        <div class="glass-strong rounded-2xl px-6 py-4 flex items-center gap-4 shadow-lg">
+          <svg viewBox="0 0 24 24" class="w-9 h-9 shrink-0" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6v3h3.8c2.2-2 3.6-5 3.6-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.8-3c-1.1.7-2.5 1.2-4.1 1.2-3.2 0-5.9-2.1-6.8-5H1.3v3.1C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.3c-.2-.7-.4-1.5-.4-2.3s.1-1.6.4-2.3V6.6H1.3C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l3.9-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.4.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.6l3.9 3.1c.9-2.9 3.6-4.9 6.8-4.9z"/></svg>
+          <div class="text-left">
+            <div class="flex items-center gap-2">
+              <span class="font-display text-2xl leading-none">5.0</span>
+              <span class="text-lg leading-none" style="color:#FBBC05">★★★★★</span>
+            </div>
+            <p class="text-sm text-ink/60 mt-1">Google ocena · verifikovane recenzije</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+        <!-- Ana Tasic -->
+        <figure class="glass rounded-3xl p-7 reveal flex flex-col">
+          <div class="flex items-center justify-between">
+            <span class="text-lg" style="color:#FBBC05" aria-label="5 od 5">★★★★★</span>
+            <svg viewBox="0 0 24 24" class="w-5 h-5 opacity-80" aria-label="Google recenzija"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6v3h3.8c2.2-2 3.6-5 3.6-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.8-3c-1.1.7-2.5 1.2-4.1 1.2-3.2 0-5.9-2.1-6.8-5H1.3v3.1C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.3c-.2-.7-.4-1.5-.4-2.3s.1-1.6.4-2.3V6.6H1.3C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l3.9-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.4.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.6l3.9 3.1c.9-2.9 3.6-4.9 6.8-4.9z"/></svg>
+          </div>
+          <blockquote class="mt-4 text-ink/80 leading-relaxed flex-1 text-pretty">Highly recommended Precious Gift in Niš! Ana is very professional, dedicated, and patient. She always makes an effort to explain everything clearly and in an engaging way. Her lessons are well-structured and adapted to each student's needs, which makes learning easier and more enjoyable. At this school, you can truly learn, improve, and see real progress in your English skills. The atmosphere is warm and supportive, while the teaching remains serious and high quality. I warmly recommend it to anyone who wants to learn and grow! 😊</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <span class="grid place-items-center w-11 h-11 rounded-full bg-brand/15 text-brand font-semibold">AT</span>
+            <span><strong class="block">Ana Tasic</strong><span class="text-sm text-ink/55">pre 7 meseci</span></span>
+          </figcaption>
+        </figure>
+
+        <!-- Ana Stojkovic -->
+        <figure class="glass rounded-3xl p-7 reveal flex flex-col" style="transition-delay:.05s">
+          <div class="flex items-center justify-between">
+            <span class="text-lg" style="color:#FBBC05" aria-label="5 od 5">★★★★★</span>
+            <svg viewBox="0 0 24 24" class="w-5 h-5 opacity-80" aria-label="Google recenzija"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6v3h3.8c2.2-2 3.6-5 3.6-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.8-3c-1.1.7-2.5 1.2-4.1 1.2-3.2 0-5.9-2.1-6.8-5H1.3v3.1C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.3c-.2-.7-.4-1.5-.4-2.3s.1-1.6.4-2.3V6.6H1.3C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l3.9-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.4.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.6l3.9 3.1c.9-2.9 3.6-4.9 6.8-4.9z"/></svg>
+          </div>
+          <blockquote class="mt-4 text-ink/80 leading-relaxed flex-1 text-pretty">Learning English at this school is one of the best things I could have done for myself. The classes are interesting and very often fun. My group is fantastic because it consists of young, ambitious people. Last but not least, Ana is the best teacher who has ever taught me. She is always smiling, fun, dedicated, and socially aware. Her social intelligence and charisma are truly captivating. 💚</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <span class="grid place-items-center w-11 h-11 rounded-full bg-brand/15 text-brand font-semibold">AS</span>
+            <span><strong class="block">Ana Stojkovic</strong><span class="text-sm text-ink/55">pre 7 meseci</span></span>
+          </figcaption>
+        </figure>
+
+        <!-- Jovana Marjanovic -->
+        <figure class="glass rounded-3xl p-7 reveal flex flex-col" style="transition-delay:.1s">
+          <div class="flex items-center justify-between">
+            <span class="text-lg" style="color:#FBBC05" aria-label="5 od 5">★★★★★</span>
+            <svg viewBox="0 0 24 24" class="w-5 h-5 opacity-80" aria-label="Google recenzija"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6v3h3.8c2.2-2 3.6-5 3.6-8.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-2.9l-3.8-3c-1.1.7-2.5 1.2-4.1 1.2-3.2 0-5.9-2.1-6.8-5H1.3v3.1C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.3c-.2-.7-.4-1.5-.4-2.3s.1-1.6.4-2.3V6.6H1.3C.5 8.2 0 10 0 12s.5 3.8 1.3 5.4l3.9-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.4.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.6l3.9 3.1c.9-2.9 3.6-4.9 6.8-4.9z"/></svg>
+          </div>
+          <blockquote class="mt-4 text-ink/80 leading-relaxed flex-1 text-pretty">I had a great experience at this English school. The teacher is wonderful, very kind and understanding. I learned a lot and the classes were really enjoyable. I highly recommend it to anyone who wants to improve their English. 🤩🤩</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <span class="grid place-items-center w-11 h-11 rounded-full bg-brand/15 text-brand font-semibold">JM</span>
+            <span><strong class="block">Jovana Marjanovic</strong><span class="text-sm text-ink/55">pre 7 meseci</span></span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" class="relative py-16 sm:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center">
+        <span class="text-brand font-semibold tracking-wide uppercase text-sm">FAQ</span>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">Česta pitanja</h2>
+      </div>
+
+      <div class="mt-10 space-y-3" id="faq-list">
+        <div class="glass rounded-2xl overflow-hidden reveal">
+          <button class="faq-btn w-full flex items-center justify-between gap-4 text-left px-5 sm:px-6 min-h-[60px] py-4 font-semibold text-base sm:text-lg">
+            <span>Kako teče besplatno testiranje nivoa?</span>
+            <svg class="faq-ico w-6 h-6 shrink-0 text-brand transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-body"><p class="px-5 sm:px-6 pb-5 text-ink/70 leading-relaxed">Kratak, opušten razgovor i pisani test od 20-ak minuta. Na osnovu rezultata preporučujemo grupu i nivo koji vam najviše odgovara. Testiranje je potpuno besplatno i ni na šta vas ne obavezuje.</p></div>
+        </div>
+
+        <div class="glass rounded-2xl overflow-hidden reveal">
+          <button class="faq-btn w-full flex items-center justify-between gap-4 text-left px-5 sm:px-6 min-h-[60px] py-4 font-semibold text-base sm:text-lg">
+            <span>Koliko polaznika ima u grupi?</span>
+            <svg class="faq-ico w-6 h-6 shrink-0 text-brand transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-body"><p class="px-5 sm:px-6 pb-5 text-ink/70 leading-relaxed">Naše grupe broje od 4 do 6 polaznika. To je dovoljno malo da svako dovoljno govori na času, a dovoljno veliko za živu interakciju i razmenu.</p></div>
+        </div>
+
+        <div class="glass rounded-2xl overflow-hidden reveal">
+          <button class="faq-btn w-full flex items-center justify-between gap-4 text-left px-5 sm:px-6 min-h-[60px] py-4 font-semibold text-base sm:text-lg">
+            <span>Koje jezike i nivoe nudite?</span>
+            <svg class="faq-ico w-6 h-6 shrink-0 text-brand transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-body"><p class="px-5 sm:px-6 pb-5 text-ink/70 leading-relaxed">Engleski i nemački jezik, sve nivoe od A1 do C1, za decu, tinejdžere i odrasle. Imamo redovne, intenzivne i konverzacijske kurseve, kao i pripremu za međunarodne sertifikate.</p></div>
+        </div>
+
+        <div class="glass rounded-2xl overflow-hidden reveal">
+          <button class="faq-btn w-full flex items-center justify-between gap-4 text-left px-5 sm:px-6 min-h-[60px] py-4 font-semibold text-base sm:text-lg">
+            <span>Kada počinju nove grupe?</span>
+            <svg class="faq-ico w-6 h-6 shrink-0 text-brand transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-body"><p class="px-5 sm:px-6 pb-5 text-ink/70 leading-relaxed">Nove grupe formiramo tokom cele godine, čim se skupi dovoljan broj polaznika sličnog nivoa. Javite nam se i obavestićemo vas o prvom slobodnom terminu.</p></div>
+        </div>
+
+        <div class="glass rounded-2xl overflow-hidden reveal">
+          <button class="faq-btn w-full flex items-center justify-between gap-4 text-left px-5 sm:px-6 min-h-[60px] py-4 font-semibold text-base sm:text-lg">
+            <span>Da li postoji online nastava?</span>
+            <svg class="faq-ico w-6 h-6 shrink-0 text-brand transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-body"><p class="px-5 sm:px-6 pb-5 text-ink/70 leading-relaxed">Da, pored nastave u našem prostoru u Nišu, organizujemo i online grupe i individualne časove uz isti pristup zasnovan na konverzaciji.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== KONTAKT ===================== -->
+  <section id="kontakt" class="relative py-16 sm:py-24 bg-cream-deep/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mx-auto text-center reveal">
+        <span class="text-brand font-semibold tracking-wide uppercase text-sm">Kontakt</span>
+        <h2 class="mt-3 font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">Zakažite besplatno testiranje</h2>
+        <p class="mt-5 text-base sm:text-lg text-ink/70 leading-relaxed">Popunite formu ili nas pozovite — javićemo vam se u najkraćem roku.</p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 gap-8 lg:gap-10 items-start">
+        <!-- Form -->
+        <form id="contact-form" class="glass-strong rounded-3xl p-6 sm:p-8 reveal space-y-5" novalidate>
+          <div>
+            <label for="ime" class="block text-sm font-semibold mb-2">Ime i prezime</label>
+            <input id="ime" name="ime" type="text" required placeholder="Vaše ime"
+                   class="w-full min-h-[52px] rounded-xl bg-white/70 border border-ink/10 px-4 outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition" />
+          </div>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="email" class="block text-sm font-semibold mb-2">Email</label>
+              <input id="email" name="email" type="email" required placeholder="vas@email.com"
+                     class="w-full min-h-[52px] rounded-xl bg-white/70 border border-ink/10 px-4 outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition" />
+            </div>
+            <div>
+              <label for="tel" class="block text-sm font-semibold mb-2">Telefon</label>
+              <input id="tel" name="tel" type="tel" placeholder="06x xxx xxxx"
+                     class="w-full min-h-[52px] rounded-xl bg-white/70 border border-ink/10 px-4 outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition" />
+            </div>
+          </div>
+          <div>
+            <label for="kurs" class="block text-sm font-semibold mb-2">Kurs koji vas zanima</label>
+            <select id="kurs" name="kurs" class="w-full min-h-[52px] rounded-xl bg-white/70 border border-ink/10 px-4 outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition">
+              <option>Engleski — deca</option>
+              <option>Engleski — redovni</option>
+              <option>Engleski — konverzacijski</option>
+              <option>Nemački — od nule</option>
+              <option>Nemački — intenzivni</option>
+              <option>Priprema za sertifikat</option>
+              <option>Nisam siguran/na</option>
+            </select>
+          </div>
+          <div>
+            <label for="poruka" class="block text-sm font-semibold mb-2">Poruka</label>
+            <textarea id="poruka" name="poruka" rows="4" placeholder="Napišite nam nešto o svom nivou i ciljevima…"
+                      class="w-full rounded-xl bg-white/70 border border-ink/10 px-4 py-3 outline-none focus:border-brand focus:ring-2 focus:ring-brand/30 transition resize-y"></textarea>
+          </div>
+          <button type="submit" class="w-full inline-flex items-center justify-center min-h-[54px] rounded-full bg-brand text-white font-semibold text-base shadow-xl shadow-brand/30 hover:bg-brand-dark transition">
+            Pošalji prijavu
+          </button>
+          <p id="form-msg" class="hidden text-center text-sm font-semibold text-brand"></p>
+        </form>
+
+        <!-- Info + mapa -->
+        <div class="space-y-6">
+          <div class="glass rounded-3xl p-6 sm:p-8 reveal space-y-5">
+            <div class="flex items-start gap-4">
+              <span class="grid place-items-center w-12 h-12 rounded-xl bg-brand/10 text-brand shrink-0">
+                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              </span>
+              <div><h3 class="font-semibold">Lokacija</h3><p class="text-ink/70 text-sm mt-1">Sinđelićev trg 14/II/3, 18000 Niš</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="grid place-items-center w-12 h-12 rounded-xl bg-brand/10 text-brand shrink-0">
+                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+              <div><h3 class="font-semibold">Radno vreme</h3><p class="text-ink/70 text-sm mt-1">Pon–Pet: 17–22h · Sub: 12–14h</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="grid place-items-center w-12 h-12 rounded-xl bg-brand/10 text-brand shrink-0">
+                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5c0 8 7 15 15 15l-1-4-4-1-2 2a13 13 0 01-5-5l2-2-1-4z"/></svg>
+              </span>
+              <div><h3 class="font-semibold">Telefon</h3><a href="tel:+381652534486" class="text-brand text-sm mt-1 inline-block font-medium">065 2534486</a></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="grid place-items-center w-12 h-12 rounded-xl bg-brand/10 text-brand shrink-0">
+                <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg>
+              </span>
+              <div><h3 class="font-semibold">Email</h3><a href="mailto:dobrosavljevicana@gmail.com" class="text-brand text-sm mt-1 inline-block font-medium">dobrosavljevicana@gmail.com</a></div>
+            </div>
+            <div class="flex items-center gap-3 pt-2">
+              <a href="https://www.facebook.com/precious.gift.3154" target="_blank" rel="noopener" aria-label="Facebook" class="grid place-items-center w-12 h-12 rounded-full bg-brand/10 text-brand hover:bg-brand hover:text-white transition">
+                <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-3 1.3-3 3v2H8v3h3v7h3v-7h2.5l.5-3H14V9.2c0-.6.2-1.2 1-1.2z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/preciousgiftskolastranihjezika" target="_blank" rel="noopener" aria-label="Instagram" class="grid place-items-center w-12 h-12 rounded-full bg-brand/10 text-brand hover:bg-brand hover:text-white transition">
+                <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Interaktivna mapa -->
+          <a href="https://www.google.com/maps/search/?api=1&query=Sin%C4%91eli%C4%87ev+trg+14%2C+Ni%C5%A1+18000" target="_blank" rel="noopener" aria-label="Otvori lokaciju u Google Maps" class="block rounded-3xl overflow-hidden reveal shadow-lg shadow-ink/5 ring-1 ring-ink/10">
+            <iframe
+              title="PreciousGift — Sinđelićev trg 14, Niš"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=21.8900%2C43.3160%2C21.9120%2C43.3250&layer=mapnik&marker=43.3205%2C21.9010"
+              class="w-full h-56 sm:h-64 border-0 pointer-events-none"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-ink text-cream/90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="sm:col-span-2 lg:col-span-1">
+        <span class="flex items-center gap-2.5"><img src="uploads/logo.jpg" alt="PreciousGift logo" class="w-9 h-9 rounded-lg object-cover" /><span class="font-display text-2xl">Precious<span class="text-brand-light">Gift</span></span></span>
+        <p class="mt-3 text-sm text-cream/60 leading-relaxed max-w-xs">Škola engleskog i nemačkog jezika u Nišu. Male grupe, velika pažnja.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-3">Brzi linkovi</h4>
+        <ul class="space-y-2 text-sm text-cream/60">
+          <li><a href="#o-nama" class="hover:text-brand-light transition">O nama</a></li>
+          <li><a href="#kursevi" class="hover:text-brand-light transition">Kursevi</a></li>
+          <li><a href="#galerija" class="hover:text-brand-light transition">Galerija</a></li>
+          <li><a href="#faq" class="hover:text-brand-light transition">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-3">Kontakt</h4>
+        <ul class="space-y-2 text-sm text-cream/60">
+          <li>Sinđelićev trg 14/II/3, Niš</li>
+          <li><a href="tel:+381652534486" class="hover:text-brand-light transition">065 2534486</a></li>
+          <li><a href="mailto:dobrosavljevicana@gmail.com" class="hover:text-brand-light transition">dobrosavljevicana@gmail.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-3">Pratite nas</h4>
+        <div class="flex items-center gap-3">
+          <a href="https://www.facebook.com/precious.gift.3154" target="_blank" rel="noopener" aria-label="Facebook" class="grid place-items-center w-11 h-11 rounded-full bg-white/10 hover:bg-brand transition">
+            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-3 1.3-3 3v2H8v3h3v7h3v-7h2.5l.5-3H14V9.2c0-.6.2-1.2 1-1.2z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/preciousgiftskolastranihjezika" target="_blank" rel="noopener" aria-label="Instagram" class="grid place-items-center w-11 h-11 rounded-full bg-white/10 hover:bg-brand transition">
+            <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-cream/50">
+        <p>© 2026 PreciousGift Niš. Sva prava zadržana.</p>
+        <p>Napravljeno s ljubavlju prema jezicima.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== PLUTAJUĆA DUGMAD ===================== -->
+  <div class="fixed bottom-5 right-5 z-40 flex flex-col items-center gap-3">
+    <button id="to-top" aria-label="Nazad na vrh"
+      class="opacity-0 pointer-events-none translate-y-2 grid place-items-center w-13 h-13 min-w-[52px] min-h-[52px] rounded-full bg-ink text-cream shadow-xl shadow-ink/30 hover:-translate-y-0.5 transition">
+      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+    </button>
+    <a href="tel:+381652534486" aria-label="Pozovi nas"
+      class="grid place-items-center w-14 h-14 min-w-[56px] min-h-[56px] rounded-full bg-brand text-white shadow-xl shadow-brand/40 hover:bg-brand-dark hover:-translate-y-0.5 transition">
+      <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5c0 8 7 15 15 15l-1-4-4-1-2 2a13 13 0 01-5-5l2-2-1-4z"/></svg>
+    </a>
+  </div>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // ---- Mobile menu ----
+    const burger = document.getElementById('burger');
+    const burgerClose = document.getElementById('burger-close');
+    const menu = document.getElementById('mobile-menu');
+    const openMenu = () => {
+      menu.classList.remove('translate-x-full');
+      menu.setAttribute('aria-hidden', 'false');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      menu.classList.add('translate-x-full');
+      menu.setAttribute('aria-hidden', 'true');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    burger.addEventListener('click', openMenu);
+    burgerClose.addEventListener('click', closeMenu);
+    document.querySelectorAll('.m-link').forEach(l => l.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+    // ---- FAQ accordion ----
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const body = btn.nextElementSibling;
+        const ico = btn.querySelector('.faq-ico');
+        const open = body.style.maxHeight && body.style.maxHeight !== '0px';
+        // close all
+        document.querySelectorAll('.faq-body').forEach(b => { b.style.maxHeight = '0px'; });
+        document.querySelectorAll('.faq-ico').forEach(i => { i.style.transform = 'rotate(0deg)'; });
+        if (!open) {
+          body.style.maxHeight = body.scrollHeight + 'px';
+          ico.style.transform = 'rotate(45deg)';
+        }
+      });
+    });
+
+    // ---- Reveal on scroll ----
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ---- Contact form (demo) ----
+    const form = document.getElementById('contact-form');
+    const msg = document.getElementById('form-msg');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      msg.textContent = 'Hvala! Vaša prijava je poslata — javljamo se uskoro. 🎉';
+      msg.classList.remove('hidden');
+      form.reset();
+      setTimeout(() => msg.classList.add('hidden'), 6000);
+    });
+
+    // ---- Back to top ----
+    const toTop = document.getElementById('to-top');
+    const toggleTop = () => {
+      const show = window.scrollY > 500;
+      toTop.classList.toggle('opacity-0', !show);
+      toTop.classList.toggle('pointer-events-none', !show);
+      toTop.classList.toggle('translate-y-2', !show);
+    };
+    toggleTop();
+    window.addEventListener('scroll', toggleTop, { passive: true });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>
